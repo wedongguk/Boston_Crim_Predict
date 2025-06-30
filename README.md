@@ -51,34 +51,42 @@
 | 10-겹 K-Fold CV           | 48.20 (평균)            |
 | Lasso 회귀                | 46.71                   |
 
-### 시각화 결과
+### 시각화 결과 및 해석
 
-#### 1) 다중선형회귀 (Multiple Regression)
-
-![Multiple Regression Residual Plot](/mnt/data/4ff63645-590b-485c-9a78-81ad05476307.png)
-*Actual crim vs Predicted crim (다중선형회귀 잔차 산점도 및 대각선 참조선)*
+#### 1) 다중선형회귀 (Multiple Lenear Regression)
+- ![다중선형회귀](graph/Multiple_Regression.png)
+- 대부분의 데이터는 낮은 범죄율 범위(0~10)에 분포
+- 고범죄율 구간에서 예측력이 감소하며 평탄한 예측값을 생성 → **비선형 패턴 반영 부족**
 
 #### 2) 2차 다항회귀 (Polynomial Regression)
+- ![다항회귀](graph/Polynomial_Regression.png)
+- 대각선에 거의 일치하는 예측값 → **비선형성과 변수 간 상호작용 반영이 효과적**
+- 가장 낮은 MSE로 최고 성능 달성
 
-![Polynomial Regression Scatter](/mnt/data/1f850499-33ad-4078-9034-e55e2be88ab2.png)
-*Actual crim vs Predicted crim (2차 다항회귀 산점도 및 대각선 참조선)*
+#### 3) K-Fold 교차검증 결과
+- ![KFold MSE](graph/kfold.png)
+- Fold 2, 5에서 MSE 급증 → **데이터 분할에 따른 성능 편차 존재**
+- Fold 6~9는 낮은 MSE로 안정적 성능 보임
 
-#### 3) 10-겹 K-Fold 교차검증 (K-Fold CV)
+#### 4) Lasso 회귀의 λ에 따른 MSE 변화
+- ![Lasso λ vs MSE](graph/Lasso_alpha.png)
+- λ 증가 시 성능 저하 → **과도한 규제는 오히려 성능 저하 유발**
+- 붉은 점은 `LassoCV`가 찾은 최적 λ값 → 최저 MSE 도달 지점
 
-![10-Fold CV MSE Plot](/mnt/data/980f4a71-f5aa-4e04-a347-3e996e6ac517.png)
-*MSE 변동 추세 (10-겹 교차검증 각 Fold별 MSE)*
+#### 5) 모델별 MSE 비교
+- ![모델 비교](graph/compare_MSE.png)
+- Polynomial 모델이 가장 낮은 MSE, 그 외 모델은 비슷한 수준
 
-#### 4) Lasso 회귀 (Lasso Regression)
+### 종합 비교 요약
 
-![Lasso Alpha vs MSE](/mnt/data/ac208338-fed9-438f-96b7-fec66989c160.png)
-*Alpha(λ) 값에 따른 MSE 변화(Lasso 규제 강도 조절)*
+| 모델                    | 주요 특징                                | 성능 (MSE) |
+|-------------------------|-------------------------------------------|------------|
+| Multiple Regression     | 단순 선형 예측, 비선형성 반영 못함         | 약 46.5     |
+| Polynomial Regression   | 비선형 관계 반영, 성능 최고, 과적합 주의   | 약 41.9     |
+| K-Fold CV               | 분할 안정성 평가, Fold 간 성능 차 확인     | 약 48.2     |
+| Lasso Regression        | 변수 선택 가능, 성능 안정적                | 약 46.7     |
 
-#### 5) 모델별 MSE 비교 (Model Comparison)
-
-![Model Comparison (MSE)](/mnt/data/5b76b611-6dba-40e2-b2df-e580743cfd0c.png)
-*네 가지 모델의 테스트 MSE 비교: 다항회귀가 최저*MSE*
-
-## 4. 전체 해석 및 시사점 전체 해석 및 시사점
+## 4. 전체 해석 및 시사점 전체 해석 및 시사점 전체 해석 및 시사점
 
 1. **선형회귀(OLS & Multiple Regression)**  
    - 설명변수와 범죄율 간의 선형 관계를 가정하여 모델링.  
