@@ -36,7 +36,7 @@
 4. **모델 학습 및 예측**  
    - **다중선형회귀**: `LinearRegression`  
    - **2차 다항회귀**: `PolynomialFeatures(degree=2)` + `LinearRegression`  
-   - **10-겹 교차검증**: `KFold(n_splits=10)` + `LinearRegression`  
+   - **10-Fold 교차검증**: `KFold(n_splits=10)` + `LinearRegression`  
    - **Lasso 회귀**: `LassoCV` 로 최적 α 탐색 → `Lasso` 학습
 5. **성능평가**  
    - 테스트 셋 예측값과 실제값 간 `mean_squared_error` 계산  
@@ -48,7 +48,7 @@
 |--------------------------|-------------------------:|
 | 다중선형회귀 (Multiple)   | 46.51                   |
 | 2차 다항회귀 (Polynomial) | 41.94                   |
-| 10-겹 K-Fold CV           | 48.20 (평균)            |
+| 10-Fold CV               | 48.20 (평균)            |
 | Lasso 회귀                | 46.71                   |
 
 ### 시각화 결과 및 해석
